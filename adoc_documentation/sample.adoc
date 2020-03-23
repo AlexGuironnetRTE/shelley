@@ -1,5 +1,6 @@
 = Sample Page
 :page-permalink: /sample/
+:layout: default
 :url-asciidoctor: http://asciidoctor.org
 
 This is a sample page composed in AsciiDoc.

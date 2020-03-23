@@ -1,0 +1,2096 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/Product" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title></title>
+
+    <meta itemprop="name" content="Transfuse"/>
+    <meta itemprop="description" content="A Dependency Injection and Integration framework for Google Android"/>
+    <meta itemprop="image" content="http://androidtransfuse.org/images/icon_medium.png"/>
+    <meta itemprop="url" content="/shelley/"/>
+    <meta name="author" content="John Ericksen"/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@attransfuse" />
+    <meta name="twitter:title" content="Transfuse: A dependency injection framework for Google Android." />
+    <meta name="twitter:description" content="Transfuse is a Java Dependency Injection (DI) and integration library geared specifically for the Google Android API." />
+    <meta name="twitter:image" content="http://androidtransfuse.org/images/icon_medium.png" />
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/shelley/css/foundation.css"/>
+    <link rel="stylesheet" href="/shelley/css/coderay.css"/>
+    <link rel="stylesheet" href="/shelley/css/transfuse.css"/>
+    <script src="/shelley/js/main.js"></script>
+    <script src="/shelley/js/vendor/modernizr.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="row">
+    <div class="column">
+        <h2 class="remove-bottom" style="margin-top: 10px"><img src="/shelley/images/icon.png"/><a class="title" href="/shelley/index.html" >Transfuse</a></h2>
+        for Google Android
+
+        <div id="socialwidget">
+            <a class="image" href="https://gitter.im/johncarl81/transfuse?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/johncarl81/transfuse.svg" alt="Transfuse Gitter"></a>
+            <a href="https://twitter.com/attransfuse" class="twitter-follow-button" data-show-count="false">Follow @attransfuse</a>
+            <div class="g-plusone" data-size="medium" data-href="http://androidtransfuse.org/"></div>
+        </div>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-3 column">
+        <ul class="nav">
+            <li><a href="/shelley/index.html">About</a></li>
+            <li><a href="/shelley//adoc_documentation/developer_guide/index.html">Dev guide</a></li>
+            <li><a href="/shelley/getting_started.html">Getting Started</a></li>
+            <li><span id="documentationtoggle" class="arrow arrowright"></span><a href="/shelley/documentation.html">Documentation</a>
+                <ul id="documentation" class="nav">
+                    <li><a href="/shelley/documentation.html#introduction">Introduction</a></li>
+                    <li><a href="/shelley/documentation.html#activity">@Activity</a></li>
+                    <li><a href="/shelley/documentation.html#fragment">@Fragment</a></li>
+                    <li><a href="/shelley/documentation.html#service">@Service</a></li>
+                    <li><a href="/shelley/documentation.html#broadcastreceiver">@BroadcastReceiver</a></li>
+                    <li><a href="/shelley/documentation.html#application">@Application</a></li>
+                    <li><a href="/shelley/documentation.html#intent_factory">Intent Factory</a></li>
+                    <li><a href="/shelley/documentation.html#dependency_injection_di">Dependency Injection</a></li>
+                    <li><a href="/shelley/documentation.html#method_interceptors">Method Interceptors</a></li>
+                    <li><a href="/shelley/documentation.html#configuration">Configuration</a></li>
+                    <li><a href="/shelley/documentation.html#events">Events</a></li>
+                    <li><a href="/shelley/documentation.html#factory">@Factory</a></li>
+                    <li><a href="/shelley/documentation.html#legacy_support">Legacy Support</a></li>
+                    <li><a href="/shelley/documentation.html#reference">Reference</a></li>
+                </ul>
+            </li>
+            <li><a href="https://oss.sonatype.org/service/local/repositories/releases/archive/org/androidtransfuse/transfuse-api//transfuse-api--javadoc.jar/!/index.html">API Javadocs</a></li>
+            <li><a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.androidtransfuse%22">Download</a></li>
+        </ul>
+    </div>
+    <div class="large-9 column">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><a class="image" href="https://www.mozilla.org/en-US/MPL/2.0/"><img src="https://img.shields.io/badge/license-MPL_2.0-blue.svg" alt="MPL-2.0 License"></a></span>
+<span class="image"><a class="image" href="https://travis-ci.org/opfab/operatorfabric-core"><img src="https://travis-ci.org/opfab/operatorfabric-core.svg?branch=master" alt="Build Status"></a></span>
+<span class="image"><a class="image" href="https://sonarcloud.io/dashboard?id=org.lfenergy.operatorfabric%3Aoperatorfabric-core"><img src="https://sonarcloud.io/api/project_badges/measure?project=org.lfenergy.operatorfabric%3Aoperatorfabric-core&amp;metric=alert_status" alt="Quality Gate"></a></span>
+<span class="image"><a class="image" href="https://sonarcloud.io/component_measures?id=org.lfenergy.operatorfabric%3Aoperatorfabric-core&amp;metric=Coverage"><img src="https://sonarcloud.io/api/project_badges/measure?project=org.lfenergy.operatorfabric%3Aoperatorfabric-core&amp;metric=coverage" alt="Coverage"></a></span>
+<span class="image"><a class="image" href="https://sonarcloud.io/component_measures?id=org.lfenergy.operatorfabric%3Aoperatorfabric-core&amp;metric=Maintainability"><img src="https://sonarcloud.io/api/project_badges/measure?project=org.lfenergy.operatorfabric%3Aoperatorfabric-core&amp;metric=code_smells" alt="Code Smells"></a></span>
+<span class="image"><a class="image" href="http://opfab.github.io/"><img src="https://img.shields.io/website-up-down-green-red/http/opfab.github.io.svg" alt="Website opfab.github.io"></a></span>
+<span class="image"><a class="image" href="https://spectrum.chat/opfab"><img src="https://img.shields.io/badge/Join%20us%20on-Spectrum-%237473C0.svg" alt="Join us on Spectrum"></a></span></p>
+</div>
+<div class="paragraph">
+<p>OperatorFabric is a modular, extensible, industrial-strength and field-tested
+platform for use in electricity, water, and other utility operations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>System visualization and console integration</p>
+</li>
+<li>
+<p>Precise alerting</p>
+</li>
+<li>
+<p>Workflow scheduling</p>
+</li>
+<li>
+<p>Historian:page-layout: info</p>
+</li>
+<li>
+<p>Scripting (ex: Python, JavaScript)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It is an open source project initiated by <a href="http://www.rte-france.com/">RTE</a>
+with <a href="https://www.lfenergy.org/">LF Energy</a>.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#what-does-operatorfabric-do-in-practice">1. What does OperatorFabric do in practice?</a></li>
+<li><a href="#requirements">2. Requirements</a></li>
+<li><a href="#getting-started">3. Getting Started</a></li>
+<li><a href="#project-contents">4. Project Contents</a></li>
+<li><a href="#environment-variables">5. Environment variables</a></li>
+<li><a href="#gradle-tasks">6. Gradle Tasks</a></li>
+<li><a href="#docker-demo">7. Docker demo</a></li>
+<li><a href="#recipes">8. Recipes</a></li>
+<li><a href="#troubleshooting">9. Troubleshooting</a></li>
+<li><a href="#contributing">10. Contributing</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="what-does-operatorfabric-do-in-practice">1. What does OperatorFabric do in practice?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To perform their duties, an operator has to interact with multiple applications
+(perform actions, watch for alerts, etc.), which can prove difficult if
+there are too many of them.</p>
+</div>
+<div class="paragraph">
+<p>The idea is to aggregate all the notifications from all these applications
+into a single screen, and to allow the operator to act on them if needed.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_README/feed_screenshot.png" alt="Feed screen layout" width="450"></span></p>
+</div>
+<div class="paragraph">
+<p>These notifications are materialized by <strong>cards</strong> sorted in a <strong>feed</strong> according
+to their period of relevance and their severity.
+When a card is selected in the feed, the right-hand pane displays the <strong>details</strong>
+of the card: information about the state of the parent process instance in
+the third-party application that published it, available actions, etc.</p>
+</div>
+<div class="paragraph">
+<p>In addition, the cards will also translate as events displayed on a <strong>timeline</strong>
+(its design is still under discussion) at the top of the screen.
+This view will be complimentary to the card feed in that it will allow the
+operator to see at a glance the status of processes for a given period,
+when the feed is more like a "To Do" list.</p>
+</div>
+<div class="paragraph">
+<p>Part of the value of OperatorFabric is that it makes the integration very
+simple on the part of the third-party applications.
+To start publishing cards to users in an OperatorFabric instance, all they
+have to do is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Register as a publisher through the "Thirds" service and provide a "bundle"
+containing handlebars templates defining how cards should be rendered,
+i18n info etc.</p>
+</li>
+<li>
+<p>Publish cards as json containing card data through the card publication API</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>OperatorFabric will then:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Dispatch the cards to the appropriate users (by computing the actual users
+who should receive the card from the recipients rules defined in the card)</p>
+</li>
+<li>
+<p>Take care of the rendering of the cards, displaying details, actions,
+inputs etc.</p>
+</li>
+<li>
+<p>Display relevant information from the cards in the timeline</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Another aim of OperatorFabric is to make cooperation easier by letting
+operators forward or send cards to other operators, for example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If they need an input from another operator</p>
+</li>
+<li>
+<p>If they can&#8217;t handle a given card for lack of time or because the necessary
+action is out of their scope</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This will replace phone calls or emails, making cooperation more efficient
+and traceable.</p>
+</div>
+<div class="paragraph">
+<p>For instance, operators might be interested in knowing why a given decision
+was made in the past:
+the cards detailing the decision process steps will be accessible through
+the Archives screen, showing how the
+operators reached this agreement.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="requirements">2. Requirements</h2>
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This section describes the projects requirements regardless of
+installation options.
+Please see <a href="#getting-started">Getting Started</a> below for details on:
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>setting up a development environment with these prerequisites</p>
+</li>
+<li>
+<p>building and running OperatorFabric</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="tools-and-libraries">2.1. Tools and libraries</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Gradle 6<br></p>
+</li>
+<li>
+<p>Java 8.0<br></p>
+</li>
+<li>
+<p>Maven 3.5.3<br></p>
+</li>
+<li>
+<p>Docker</p>
+</li>
+<li>
+<p>Docker Compose with 2.1+ file format support</p>
+</li>
+<li>
+<p>Chrome (needed for UI tests in build)</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+the current Jdk used for the project is Java 8.0.242-zulu.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+It is highly recommended to use <a href="https://sdkman.io/">sdkman</a> and
+<a href="https://github.com/creationix/nvm">nvm</a> to manage tools versions.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once you have installed sdkman and nvm, you can <strong>source</strong> the following
+script to set up your development environment (appropriate versions of Gradle,
+Java, Maven and project variables set):</p>
+</div>
+<div class="listingblock">
+<div class="title">Set up development environment (using sdkman and nvm)</div>
+<div class="content">
+<pre class="highlight"><code>source bin/load_environment_light.sh</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="software">2.2. Software</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="RABBITMQ.md">RabbitMQ 3.7.6 +</a>: AMQP messaging layer allows inter
+service communication</p>
+</li>
+<li>
+<p>MongoDB 4.0 +: Card persistent storage</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>RabbitMQ is required for :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Card AMQP push</p>
+</li>
+<li>
+<p>Multiple service sync</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>MongoDB is required for :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Current Card storage</p>
+</li>
+<li>
+<p>Archived Card storage</p>
+</li>
+<li>
+<p>User Storage</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Installing MongoDB and RabbitMQ is not necessary as preconfigured
+MongoDB and RabbitMQ are available in the form of docker-compose configuration
+files at
+<a href="src/main/docker">src/main/docker</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="browser-support">2.3. Browser support</h3>
+<div class="paragraph">
+<p>We currently use Firefox (63.0.3). Automatic tests for the UI rely on Chrome
+(73.0.3683.86).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting-started">3. Getting Started</h2>
+<div class="sectionbody">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The steps below assume that you have installed and are using
+<a href="https://sdkman.io/">sdkman</a> and
+<a href="https://github.com/creationix/nvm">nvm</a> to manage tool versions ( for java,
+gradle, node and npm).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There are several ways to get started with OperatorFabric. Please look into
+the section that best fits your needs.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you encounter any issue, see <a href="#troubleshooting">Troubleshooting</a> below. In particular,
+a command that hangs then fails is often a proxy issue.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="build-and-run-using-script">3.1. Build and run using script</h3>
+<div class="paragraph">
+<p>The following steps describe how to launch MongoDB, RabbitMQ and SonarQube
+using Docker,  build OperatorFabric using gradle and run it using the
+<code>run_all.sh</code> script.</p>
+</div>
+<div class="sect3">
+<h4 id="clone-repository">3.1.1. Clone repository</h4>
+<div class="listingblock">
+<div class="content">
+<pre>git clone https://github.com/opfab/operatorfabric-core.git
+cd operatorfabric-core</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="set-up-your-environment-environment-variables-appropriate-versions-of-gradle-maven-etc">3.1.2. Set up your environment (environment variables &amp; appropriate versions of gradle, maven, etc…)</h4>
+<div class="listingblock">
+<div class="content">
+<pre>source bin/load_environment_light.sh</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+From now on, you can use environment variable $OF_HOME to go back to
+the home repository of OperatorFabric.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deploy-dockerized-mongodb-rabbitmq-and-sonarqube">3.1.3. Deploy dockerized MongoDB, RabbitMQ and SonarQube</h4>
+<div class="paragraph">
+<p>MongoDB, RabbitMQ and SonarQube are needed for the tests to be run so the
+build can be done.</p>
+</div>
+<div class="paragraph">
+<p>A docker-compose file with properly configured containers is available
+<a href="src/main/docker/test-quality-environment/">there</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>docker-compose</code> can be run in detached mode:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd src/main/docker/test-quality-environment/
+docker-compose up -d</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="build-operatorfabric-with-gradle">3.1.4. Build OperatorFabric with Gradle</h4>
+<div class="paragraph">
+<p>Using the wrapper in order to ensure building the project the same way from one machine to another.</p>
+</div>
+<div class="paragraph">
+<p>To only compile and package the jars:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd $OF_HOME
+./gradlew assemble</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To launch the Unit Test, compile and package the jars:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd $OF_HOME
+./gradlew build</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="run-operatorfabric-services-using-the-run_all-sh-script">3.1.5. Run OperatorFabric Services using the <code>run_all.sh</code> script</h4>
+<div class="listingblock">
+<div class="content">
+<pre>bin/run_all.sh start</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+See <code>bin/run_all.sh -h</code> for details.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="check-services-status">3.1.6. Check services status</h4>
+<div class="listingblock">
+<div class="content">
+<pre>bin/run_all.sh status</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="log-into-the-ui">3.1.7. Log into the UI</h4>
+<div class="paragraph">
+<p>URL: localhost:2002/ui/</p>
+</div>
+<div class="paragraph">
+<p>login: admin</p>
+</div>
+<div class="paragraph">
+<p>password: test</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+It might take a little while for the UI to load even after all
+services are running.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Don&#8217;t forget the <strong>final slash</strong> in the URL or you will get an error.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="push-cards-to-the-feed">3.1.8. Push cards to the feed</h4>
+<div class="paragraph">
+<p>You can check that you see cards into the feed by running the
+<code>push_card_loop.sh</code> script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>services/core/cards-publication/src/main/bin/push_card_loop.sh</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="demonstration-mode">3.2. Demonstration mode</h3>
+<div class="paragraph">
+<p>If you only want a quick demonstration of what OperatorFabric looks like
+and what it can do, use our standalone docker demo.
+See <a href="#docker-demo">Docker demo</a> for details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="going-further">3.3. Going Further</h3>
+<div class="paragraph">
+<p>When you feel ready to experiment with the project, or if the steps above
+don&#8217;t quite cover what you&#8217;re planning to do, please look into the <a href="#recipes">Recipes</a>
+section.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In addition, a
+<a href="https://opfab.github.io/documentation/1.1.0.SNAPSHOT/start/">Getting
+Started guide on our website</a> exists.
+Check it out !
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="project-contents">4. Project Contents</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="project-structure">4.1. Project Structure</h3>
+<div class="sect3">
+<h4 id="tree-view">4.1.1. Tree View</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>project
+├──bin
+│   └─ travis
+├──client
+│   ├──cards (cards-client-data)
+│   ├──src
+│   └──users (users-client-data)
+├──services
+│   ├──core
+│   │   ├──cards-consultation (cards-consultation-business-service)
+│   │   ├──cards-publication (cards-publication-business-service)
+│   │   ├──src
+│   │   ├──thirds (third-party-business-service)
+│   │   └──users (users-business-service)
+│   ├──infra
+│   │   ├──client-gateway (client-gateway-cloud-service)
+│   │   ├──config (configuration-cloud-service)
+│   │   └──registry (registry-cloud-service)
+│   └──web
+│       └──web-ui
+├──src
+|   ├──docs
+|   │   ├──asciidoc
+|   │   └──modelio
+|   └──main
+|       ├──docker
+|       └──headers
+├──tools
+│   ├──generic
+│   │   ├──test-utilities
+│   │   └──utilities
+│   ├── spring
+│   │   ├──spring-mongo-utilities
+│   │   ├──spring-oauth2-utilities
+│   │   ├──spring-test-utilities
+│   │   └──spring-utilities
+│   └──swagger-spring-generators
+└─ui</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="content-details">4.1.2. Content Details</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bin">bin</a>: contains useful scripts</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="bin/travis">travis</a>: travis script for documentation generation and
+upload to opfab.github.io repository</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="client">client</a>: contains REST APIs simple beans definition, may be
+used by external projects</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="client/cards">cards (cards-client-data)</a>: simple beans regarding cards</p>
+</li>
+<li>
+<p><a href="client/src">src</a>: contains swagger templates for <a href="client">client</a>
+code generation</p>
+</li>
+<li>
+<p><a href="client/users">users (users-client-data)</a>: simple beans regarding users</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="services">services</a>: contains the microservices that make up
+OperatorFabric</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="services/core">core</a>: contains core business microservices</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="services/core/cards-consultation">cards-consultation
+(cards-consultation-business-service)</a>: Card consultation service</p>
+</li>
+<li>
+<p><a href="services/core/cards-publication">cards-publication
+(cards-publication-business-service)</a>: Card publication service</p>
+</li>
+<li>
+<p><a href="services/core/src">src</a>: contains swagger templates for core business
+microservices</p>
+</li>
+<li>
+<p><a href="services/core/thirds">thirds (third-party-business-service)</a>:
+Third-party information management service</p>
+</li>
+<li>
+<p><a href="services/core/users">users (users-business-service)</a>: Users management
+service</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="services/infra">infra</a>: contains infrastructure microservices</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="services/infra/client-gateway">client-gateway
+(client-gateway-cloud-service)</a>: spring-gateway client side only gateway
+microservice, used to serve public apis and web ui</p>
+</li>
+<li>
+<p><a href="services/infra/config">config (configuration-cloud-service)</a>:
+spring-configuration centralized configuration microservice</p>
+</li>
+<li>
+<p><a href="services/infra/registry">registry (registry-cloud-service)</a>: eureka
+microservice registry</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="services/web">web</a>: contains web pages and application services</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="services/web/web-ui">web-ui</a>: Main OperatorFabric SPA</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="src">src</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="src/docs">docs</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="src/docs/asciidoc">asciidoc</a>: General documentation (Architecture,
+Getting Started Guide, etc.)</p>
+</li>
+<li>
+<p><a href="src/docs/modelio">modelio</a>: Archive containing documentation diagrams</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="src/main">main</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="src/main/docker">docker</a>: contains docker-compose files to help with
+tests and demonstrations</p>
+</li>
+<li>
+<p><a href="src/main/headers">headers</a>: contains license header files</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="tools">tools</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="tools/generic">generic</a>: Generic (as opposed to Spring-related)
+utility code</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="tools/generic/test-utilities">test-utilities</a>: Test-specific
+utility code</p>
+</li>
+<li>
+<p><a href="tools/generic/utilities">utilities</a>: Utility code</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="tools/spring">spring</a>: Spring-related utility code</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="tools/spring/spring-mongo-utilities">spring-mongo-utilities</a> : Utility
+code with Spring-specific dependencies, used to share common features across
+MongoDB-dependent services</p>
+</li>
+<li>
+<p><a href="tools/spring/spring-oauth2-utilities">spring-oauth2-utilities</a> :
+Utility code with Spring-specific dependencies, used to share common features
+across OAuth2-dependent services</p>
+</li>
+<li>
+<p><a href="tools/spring/spring-test-utilities">spring-test-utilities</a> : Utility
+code with Spring-specific dependencies for testing purposes</p>
+</li>
+<li>
+<p><a href="tools/spring/spring-utilities">spring-utilities</a> : Utility code with
+Spring-specific dependencies</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="tools/swagger-spring-generators">swagger-spring-generators</a> : Spring
+Boot generator for swagger, tailored for OperatorFabric needs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="ui">ui</a>: Angular sources for the UI</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="conventions-regarding-project-structure-and-configuration">4.2. Conventions regarding project structure and configuration</h3>
+<div class="paragraph">
+<p>Sub-projects must conform to a few rules in order for the configured Gradle
+tasks to work:</p>
+</div>
+<div class="sect3">
+<h4 id="java">4.2.1. Java</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+[sub-project]/src/main/java
+</td>
+<td class="hdlist2">
+<p>contains java source code</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+[sub-project]/src/test/java
+</td>
+<td class="hdlist2">
+<p>contains java tests source code</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+[sub-project]/src/main/resources
+</td>
+<td class="hdlist2">
+<p>contains resource files</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+[sub-project]/src/test/resources
+</td>
+<td class="hdlist2">
+<p>contains test resource files</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="modeling">4.2.2. Modeling</h4>
+<div class="paragraph">
+<p>Core services projects declaring REST APIS that use Swagger for their
+definition must declare two files:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+[sub-project]/src/main/modeling/swagger.yaml
+</td>
+<td class="hdlist2">
+<p>Swagger API definition</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+[sub-project]/src/main/modeling/config.json
+</td>
+<td class="hdlist2">
+<p>Swagger generator configuration</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="docker">4.2.3. Docker</h4>
+<div class="paragraph">
+<p>Services project all have docker image generated in their build cycle (See
+<a href="#gradle-tasks">Gradle Tasks</a>).</p>
+</div>
+<div class="paragraph">
+<p>Per project configuration :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>docker file : <strong>[sub-project]/src/main/docker/Dockerfile</strong></p>
+</li>
+<li>
+<p>docker-compose file : <strong>[sub-project]/src/main/docker/docker-compose.yml</strong></p>
+</li>
+<li>
+<p>runtime data : <strong>[sub-project]/src/main/docker/volume</strong> is copied to
+<strong>[sub-project]/build/docker-volume/</strong> by task <strong>copyWorkingDir</strong>. The latest
+can then be mounted as volume in docker containers.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="scripts-bin-and-cicd">4.3. Scripts (bin and CICD)</h3>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+bin/build_all.sh
+</td>
+<td class="hdlist2">
+<p>builds all artifacts as gradle is not able to manage
+inter project dependencies</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+bin/clean_all.sh
+</td>
+<td class="hdlist2">
+<p>remove IDE data (project configuration, build output
+directory) - idea, vsc</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+bin/load_environment_light.sh
+</td>
+<td class="hdlist2">
+<p>sets up environment when <strong>sourced</strong> (java
+version, gradle version, maven version, node version)</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+bin/load_environment_ramdisk.sh
+</td>
+<td class="hdlist2">
+<p>sets up environment and links build
+subdirectories to a ramdisk when <strong>sourced</strong> at ~/tmp</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+CICD/prepare_release_version.sh
+</td>
+<td class="hdlist2">
+<p>performs the changes necessary to tag a RELEASE version</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+CICD/prepare_snapshot_version.sh
+</td>
+<td class="hdlist2">
+<p>performs the changes necessary to tag a SNAPSHOT version</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+bin/run_all.sh
+</td>
+<td class="hdlist2">
+<p>runs all all services (see below)</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+bin/setup_dockerized_environment.sh
+</td>
+<td class="hdlist2">
+<p>generate docker images for all services</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="load_environment_ramdisk-sh">4.3.1. load_environment_ramdisk.sh</h4>
+<div class="paragraph">
+<p>There are prerequisites before sourcing load_environment_ramdisk.sh:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Logged user needs sudo rights for mount</p>
+</li>
+<li>
+<p>System needs to have enough free ram</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+Never ever run a <code>gradle clean</code> or <code>./gradlew clean</code> to avoid deleting those links.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="run_all-sh">4.3.2. run_all.sh</h4>
+<div class="paragraph">
+<p>Please see <code>run_all.sh -h</code> usage before running.</p>
+</div>
+<div class="paragraph">
+<p>Prerequisites</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>mongo running on port 27017 with user "root" and password "password"
+(See src/main/docker/mongodb/docker-compose.yml for a pre configured instance).</p>
+</li>
+<li>
+<p>rabbitmq running on port 5672 with user "guest" and password "guest"
+(See src/main/docker/rabbitmq/docker-compose.yml for a pre configured
+instance).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p> <details><summary> 
+<strong>Ports configuration</strong>
+ </summary><div> </p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Port</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">registry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registry service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gateway</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway service http (REST+html)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thirds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Third party management service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2102</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-publication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">card publication service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2103</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users management service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2104</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-consultation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">card consultation service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">registry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gateway</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thirds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4102</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-publication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4103</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4103</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-consultation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p> </div></details> </p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="setup_dockerized_environment-sh">4.3.3. setup_dockerized_environment.sh</h4>
+<div class="paragraph">
+<p>Please see <code>setup_dockerized_environment.sh -h</code> usage before running.</p>
+</div>
+<div class="paragraph">
+<p>Builds all sub-projects, generate docker images and volumes for docker-compose.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="environment-variables">5. Environment variables</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>These variables are loaded by bin/load_environment_light.sh
+bin/load_environment_ramdisk.sh</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>OF_HOME: OperatorFabric root dir</p>
+</li>
+<li>
+<p>OF_CORE: OperatorFabric business services subroot dir</p>
+</li>
+<li>
+<p>OF_INFRA: OperatorFabric infrastructure services subroot dir</p>
+</li>
+<li>
+<p>OF_CLIENT: OperatorFabric client data definition subroot dir</p>
+</li>
+<li>
+<p>OF_TOOLS: OperatorFabric tooling libraries subroot dir</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Additionally, you may want to configure the following variables</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Docker build proxy configuration (used to configure alpine apk proxy
+settings)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>APK_PROXY_URI</p>
+</li>
+<li>
+<p>APK_PROXY_HTTPS_URI</p>
+</li>
+<li>
+<p>APK_PROXY_USER</p>
+</li>
+<li>
+<p>APK_PROXY_PASSWORD</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gradle-tasks">6. Gradle Tasks</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="custom-tasks">6.1. Custom tasks</h3>
+<div class="paragraph">
+<p>In this section only custom tasks are described. For more
+information on tasks, refer to the output of the "tasks" gradle task and
+to gradle and plugins official documentation.</p>
+</div>
+<div class="sect3">
+<h4 id="page-layout-infoservices">6.1.1. :page-layout: infoServices</h4>
+<div class="sect4">
+<h5 id="common-tasks-for-all-sub-projects">Common tasks for all sub-projects</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Test tasks</p>
+<div class="ulist">
+<ul>
+<li>
+<p>unitTest: runs unit tests</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Other:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>copyWorkingDir: copies [sub-project]/src/main/docker/volume to
+[sub-project]/build/</p>
+</li>
+<li>
+<p>copyDependencies: copy dependencies to build/libs</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="core">Core</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Swagger Generator tasks</p>
+<div class="ulist">
+<ul>
+<li>
+<p>debugSwaggerOperations: generate swagger code from
+/src/main/modeling/config.json to build/swagger-analyse</p>
+</li>
+<li>
+<p>swaggerHelp: display help regarding swagger configuration options for java</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="third-party-service">Third Party Service</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Test tasks</p>
+<div class="ulist">
+<ul>
+<li>
+<p>prepareTestDataDir: prepare directory (build/test-data) for test data</p>
+</li>
+<li>
+<p>compressBundle1Data, compressBundle2Data: generate tar.gz third party
+configuration data for tests in build/test-data</p>
+</li>
+<li>
+<p>prepareDevDataDir: prepare directory (build/dev-data) for bootRun task</p>
+</li>
+<li>
+<p>createDevData: prepare data in build/test-data for running bootRun task
+during development</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Other tasks</p>
+<div class="ulist">
+<ul>
+<li>
+<p>copyCompileClasspathDependencies: copy compile classpath dependencies,
+catching lombok that must be sent for sonarqube</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="infraconfig">infra/config</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Test tasks</p>
+<div class="ulist">
+<ul>
+<li>
+<p>createDevData: prepare data in build/test-data for running bootRun task
+during development</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="toolsgeneric">tools/generic</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Test tasks</p>
+<div class="ulist">
+<ul>
+<li>
+<p>prepareTestData: copy test data from src/test/data/simple to
+build/test-data/</p>
+</li>
+<li>
+<p>compressTestArchive: compress the contents of /src/test/data/archive to
+/build/test-data/archive.tar.gz</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="gradle-plugins">6.1.2. Gradle Plugins</h4>
+<div class="paragraph">
+<p>In addition to these custom tasks and standard Gradle tasks, OperatorFabric
+uses several Gradle plugins, among which:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/">Spring Boot Gradle Plugin</a></p>
+</li>
+<li>
+<p><a href="https://github.com/palantir/gradle-docker">Palantir Docker Gradle Plugin</a></p>
+</li>
+<li>
+<p><a href="https://github.com/avast/gradle-docker-compose-plugin/">Docker Compose Plugin</a></p>
+</li>
+<li>
+<p><a href="https://github.com/int128/gradle-swagger-generator-plugin">Gradle Swagger Generator Plugin</a></p>
+</li>
+<li>
+<p><a href="https://github.com/asciidoctor/asciidoctor-gradle-plugin">Gradle Asciidoctor Plugin</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="docker-demo">7. Docker demo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A global docker compose files for demonstration purposes is available at
+<a href="src/main/docker/deploy">src/main/docker/deploy</a> : sets up all services,
+ready for card reception</p>
+</div>
+<div class="paragraph">
+<p><strong>This setup expose the application UI at localhost:2002/ui/</strong></p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Don&#8217;t forget the <strong>final slash</strong> in the URL or you will get an error.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Card publication entry points are exposed at localhost:2102/cards</p>
+</div>
+<div class="paragraph">
+<p>For debugging purpose the following ports are also exposed:</p>
+</div>
+<div class="paragraph">
+<p> <details><summary> 
+<strong>Complete port table</strong>
+ </summary><div> </p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Port</th>
+<th class="tableblock halign-left valign-top">Forwards to</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">89</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KeyCloak</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">89</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KeyCloak api port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">registry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registry service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gateway</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway service http (REST+html)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thirds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Third party management service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2102</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-publication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">card publication service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2103</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users management service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2104</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-consultation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">card consultation service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2105</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">actions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">actions (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2200</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">web-ui</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">card consultation service http (REST)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">registry</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gateway</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thirds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4102</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-publication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4103</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4104</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-consultation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4105</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">actions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4200</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">web-ui</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java debug port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">27017</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mongo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">27017</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mongo api port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5672</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rabbitmq</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5672</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">amqp api port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15672</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rabbitmq</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15672</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rabbitmq api port</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p> </div></details> </p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="recipes">8. Recipes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="generating-docker-images">8.1. Generating docker images</h3>
+<div class="paragraph">
+<p>To Generate all docker images run <code>bin/setup_dockerized_environment.sh</code>.</p>
+</div>
+<div class="paragraph">
+<p>INFORMATION: If you work behind a proxy you need to specify the following
+properties to
+configure alpine apk package manager:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>apk.proxy.uri: proxy http uri ex:
+"http://somewhere:3128[<a href="http://somewhere:3128" class="bare">somewhere:3128</a>]" (defaults to blank)</p>
+</li>
+<li>
+<p>apk.proxy.httpsuri: proxy http uri ex:
+"http://somewhere:3128[<a href="http://somewhere:3128" class="bare">somewhere:3128</a>]" (defaults to apk.proxy.uri
+value)</p>
+</li>
+<li>
+<p>apk.proxy.user: proxy user</p>
+</li>
+<li>
+<p>apk.proxy.password: proxy <strong>unescaped</strong> password</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Alternatively, you may configure the following environment variables :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>APK_PROXY_URI</p>
+</li>
+<li>
+<p>APK_PROXY_HTTPS_URI</p>
+</li>
+<li>
+<p>APK_PROXY_USER</p>
+</li>
+<li>
+<p>APK_PROXY_PASSWORD</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="managing-a-service-with-docker-compose">8.2. Managing a service with docker-compose</h3>
+<div class="paragraph">
+<p>Prerequisites : images must be registered</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To deploy a service run <code>gradle :[subprojectPath]:composeUp</code>
+example for the third-party-service service :
+`
+gradle :services:core:third-party-service:composeUp
+`</p>
+</li>
+<li>
+<p>To tear down a service run <code>gradle :[subprojectPath]:composeDown</code></p>
+</li>
+<li>
+<p>To start an already containerized service run <code>gradle
+:[subprojectPath]:composeStart</code></p>
+</li>
+<li>
+<p>To stop an already containerized service run <code>gradle
+:[subprojectPath]:composeStop</code></p>
+</li>
+<li>
+<p>To follow logs of a running service run <code>gradle :[subprojectPath]:composeLog</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-sub-project-from-jar-file">8.3. Running sub-project from jar file</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>gradle :[sub-projectPath]:bootJar</p>
+</li>
+<li>
+<p>or java -jar [sub-projectPath]/build/libs/[sub-project].jar</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="overriding-properties-when-running-from-jar-file">8.4. Overriding properties when running from jar file</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>java -jar [sub-projectPath]/build/libs/[sub-project].jar
+–spring.config.additional-location=file:[filepath]
+NB : properties may be set using ".properties" file or ".yml" file. See
+<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html">Spring
+Boot configuration</a> for more info.</p>
+</li>
+<li>
+<p>Generic property list extract :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>server.port (defaults to 8080) : embedded server port</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>:services:core:third-party-service properties list extract :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>operatorfabric.thirds.storage.path (defaults to &quot;&quot;) : where to
+save/load OperatorFabric Third Party data</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="service-port-table">8.5. Service port table</h3>
+<div class="paragraph">
+<p>By default all service built artifacts are configured with server.port set
+to 8080</p>
+</div>
+<div class="paragraph">
+<p>If you run the services using <code>bootRun</code> Gradle task or the provided
+docker-compose files (see [prj]/src/main/docker) the ports used are</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Service</th>
+<th class="tableblock halign-right valign-top">bootRun port</th>
+<th class="tableblock halign-right valign-top">docker-compose mapping</th>
+<th class="tableblock halign-right valign-top">docker-compose debug mapping</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">registry</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2001</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2001</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2001</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gateway</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2002</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2002</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2002</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thirds</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2100</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2100</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2100</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-publication</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2102</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2102</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2102</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2103</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2103</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2103</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-consultation</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2104</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2104</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">2104</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">config</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4000</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4000</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4000</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">registry</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4001</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4001</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4001</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gateway</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4002</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4002</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4002</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">thirds</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4100</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4100</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4100</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-publication</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4102</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4102</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4102</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">users</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4103</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4103</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4103</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cards-consultation</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4103</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4103</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4103</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="troubleshooting">9. Troubleshooting</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p> <details><summary> 
+<strong>Proxy error when running third-party docker-compose</strong>
+ </summary><div> </p>
+</div>
+<div class="listingblock">
+<div class="title">Error message</div>
+<div class="content">
+<pre class="highlight"><code>Pulling rabbitmq (rabbitmq:3-management)...
+ERROR: Get https://registry-1.docker.io/v2/: Proxy Authentication Required</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Possible causes &amp; resolution</div>
+<p>When running docker-compose files using third-party images(such as rabbitmq,
+mongodb etc.) the first time, docker will need to pull these images from
+their repositories.
+If the docker proxy isn&#8217;t set properly, you will see the above message.</p>
+</div>
+<div class="paragraph">
+<p>To set the proxy, follow <a href="https://docs.docker.com/config/daemon/systemd/">these
+steps from the docker documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>If your proxy needs authentication, add your user and password as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>HTTP_PROXY=http://user:password@proxy.example.com:80/</pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The password should be URL-encoded.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p> </div></details> </p>
+</div>
+<div class="paragraph">
+<p> <details><summary> 
+<strong>Gradle Metaspace error</strong>
+ </summary><div> </p>
+</div>
+<div class="paragraph">
+<p>Gradle task (for example gradle build) fails with the following error:</p>
+</div>
+<div class="listingblock">
+<div class="title">Error message</div>
+<div class="content">
+<pre class="highlight"><code>* What went wrong:
+Metaspace</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Possible causes &amp; resolution</div>
+<p>Issue with the Gradle daemon. Stopping the daemon using <code>gradle --stop</code>
+and re-launching the build should solve this issue.</p>
+</div>
+<div class="paragraph">
+<p> </div></details> </p>
+</div>
+<div class="paragraph">
+<p> <details><summary> 
+<strong>Java version not available when setting up environment</strong>
+ </summary><div> 
+When sourcing the <a href="bin/load_environment_light.sh">load_environment_light</a>
+script to set up your environment, you might get the following error message:</p>
+</div>
+<div class="listingblock">
+<div class="title">Error message</div>
+<div class="content">
+<pre class="highlight"><code>Stop! java 8.0.192-zulu is not available. Possible causes:
+ * 8.0.192-zulu is an invalid version
+ * java binaries are incompatible with Linux64
+ * java has not been released yet</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Select the next available version and update
+<a href="bin/load_environment_light.sh">load_environment_light</a> accordingly before
+sourcing it again.</p>
+</div>
+<div class="paragraph">
+<div class="title">Possible causes &amp; resolution</div>
+<p>The java version currently listed in the script might have been deprecated
+(for security reasons) or might not be available for your operating system
+(for example, 8.0.192-zulu wasn&#8217;t available for Ubuntu).</p>
+</div>
+<div class="paragraph">
+<p>Run <code>sdk list java</code> to find out which versions are available. You will get
+this kind of output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>================================================================================
+Available Java Versions
+================================================================================
+     13.ea.16-open       9.0.4-open          1.0.0-rc-11-grl
+     12.0.0-zulu         8.0.202-zulu        1.0.0-rc-10-grl
+     12.0.0-open         8.0.202-amzn        1.0.0-rc-9-grl
+     12.0.0-librca       8.0.202.j9-adpt     1.0.0-rc-8-grl
+     11.0.2-zulu         8.0.202.hs-adpt
+     11.0.2-open         8.0.202-zulufx
+     11.0.2-amzn         8.0.202-librca
+     11.0.2.j9-adpt      8.0.201-oracle
+     11.0.2.hs-adpt  &gt; + 8.0.192-zulu
+     11.0.2-zulufx       7.0.211-zulu
+     11.0.2-librca       6.0.119-zulu
+     11.0.2-sapmchn      1.0.0-rc-15-grl
+     10.0.2-zulu         1.0.0-rc-14-grl
+     10.0.2-open         1.0.0-rc-13-grl
+     9.0.7-zulu          1.0.0-rc-12-grl
+
+================================================================================
++ - local version
+* - installed
+&gt; - currently in use
+================================================================================</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p> </div></details> </p>
+</div>
+<div class="paragraph">
+<p> <details><summary> 
+<strong>BUILD FAILED with message <code>Execution failed for task ':ui:main-user-interface:npmInstall'.</code></strong>
+ </summary><div> </p>
+</div>
+<div class="listingblock">
+<div class="title">Error message</div>
+<div class="content">
+<pre class="highlight"><code>FAILURE: Build failed with an exception.
+
+    What went wrong:
+    Execution failed for task ':ui:main-user-interface:npmInstall'.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Possible causes &amp; resolution</div>
+<p>A <code>sudo</code> has been used before the <code>./gradlew assemble</code>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Don&#8217;t use <strong>sudo</strong> to build OperatorFabric otherwise unexpected problems could arise.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p> </div></details> 
+== Licensing</p>
+</div>
+<div class="paragraph">
+<p>This project and all its sub-projects are licensed under
+<a href="https://www.mozilla.org/en-US/MPL/2.0/">Mozilla Public License V2.0</a>. See
+<a href="LICENSE.txt">LICENSE.txt</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributing">10. Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Read our <a href="CONTRIBUTING.adoc">CONTRIBUTING</a> file for more information on
+how to contribute to the project.</p>
+</div>
+</div>
+</div>
+  </div>
+
+</article>
+
+    </div>
+</div>
+
+<a href="https://github.com/johncarl81/transfuse"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub" /></a>
+
+<div id="footer">
+</div>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-11587475-2', 'auto');
+    ga('send', 'pageview');
+
+    //twitter button
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+    //google +1 button
+    (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+
+    function setupToggle(expanded, toggleId, toggleBodyId){
+
+        var updateArrows = function() {
+            updateArrowCss(expanded ? 'arrowdown' : 'arrowright');
+        }
+
+        var updateArrowCss = function updateArrowCss(classifier){
+            $(toggleId).removeClass('arrowright');
+            $(toggleId).removeClass('arrowdiag');
+            $(toggleId).removeClass('arrowdown');
+            $(toggleId).addClass(classifier);
+        }
+
+        if(expanded){
+            $(toggleBodyId).show();
+        }
+        else{
+            $(toggleBodyId).hide();
+        }
+        updateArrows();
+
+        $(toggleId).mousedown(function() {
+            updateArrowCss('arrowdiag');
+        });
+
+        $(toggleId).mouseout(function() {
+            updateArrows();
+        });
+
+        $(toggleId).click(function() {
+            if(expanded){
+                $(toggleBodyId).slideUp();
+            }
+            else{
+                $(toggleBodyId).slideDown();
+            }
+            expanded = !expanded;
+            updateArrows();
+        });
+    }
+
+    setupToggle(, '#documentationtoggle', '#documentation');
+    setupToggle(, '#poststoggle', '#posts');
+
+</script>
+</body>
+</html>
